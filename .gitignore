@@ -1,0 +1,58 @@
+*.swp
+*.*~
+project.lock.json
+.DS_Store
+*.pyc
+nupkg/
+
+# Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+[Bb]in/
+[Oo]bj/
+[Oo]ut/
+msbuild.log
+msbuild.err
+msbuild.wrn
+
+# Package results
+/*[Dd]ist
+*.nupkg
+
+# Cake
+/build/Cake/Addins
+/build/Cake/Modules
+/build/Cake/Tools/**
+!/build/Cake/Tools/packages.config
+build.gitversion
+
+# Visual Studio
+.vs/
+
+# User-specific files
+*.suo
+*.user
+*.[Cc]ache
+*.[Cc]overage
+*.userosscache
+*.sln.docstates
+
+# NUnit
+TestResult.xml
+/TestResults
+/_testResults
+/build/tools/Cake
+/build/tools/nuget.exe
+/build/tools/packages.config.md5sum
+/build/.vscode
+/build/tools
+
+# Visual Studio Code
+.vscode
+
+# Rider
+.idea
