@@ -23,21 +23,10 @@ namespace SyncFusionPDFBurning.Controllers
 
         [HttpPost]
         [Route("/burn")]
-        public IActionResult Post([FromForm] DeficiencyData deficiencydata)
+        public IActionResult Post([FromForm] IFormFile file, [FromForm] Metadata metadata)
         {
-            Metadata metadata = new Metadata()
-            {
-                fontColour = deficiencydata.fontColour,
-                fontFamily = deficiencydata.fontFamily,
-                fontSize = deficiencydata.fontSize,
-                x = deficiencydata.x,
-                y = deficiencydata.y,
-                height = deficiencydata.height,
-                width = deficiencydata.width,
-                pageNumber = deficiencydata.pageNumber,
-                text = deficiencydata.text
-            };
-            return textOnExistingPDF(deficiencydata.file, metadata);
+
+            return textOnExistingPDF(file, metadata);
             //return textOnBlankPdf();
 
         }
@@ -45,8 +34,8 @@ namespace SyncFusionPDFBurning.Controllers
         private FileStreamResult textOnExistingPDF(IFormFile pdf, Metadata metadata)
         {
 
-            PdfFont font = new PdfStandardFont(PdfFontFamily.Helvetica, 15f);
-            PdfBrush brush = new PdfSolidBrush(Color.Black);
+            PdfFont font = new PdfStandardFont(metadata.GetFontFamily(), metadata.FontSize);
+            PdfBrush brush = new PdfSolidBrush(metadata.GetFontColor());
 
             //Creates a copy PDF document to edit.
             var memoryStream = new MemoryStream();
@@ -55,11 +44,11 @@ namespace SyncFusionPDFBurning.Controllers
             PdfDocument doc = new PdfDocument();
             doc.ImportPageRange(document, 0, document.Pages.Count - 1);
 
-            RectangleF defrectangle = new RectangleF(metadata.x, metadata.y, metadata.height, metadata.width);
+            RectangleF defrectangle = new RectangleF(metadata.X, metadata.Y, metadata.Height, metadata.Width);
 
-            if (metadata.pageNumber > 0)
+            if (metadata.PageNumber > 0)
             {
-                doc.Pages[metadata.pageNumber - 1].Graphics.DrawString(metadata.text, font, brush, defrectangle);//draw on the pagenumber specified
+                doc.Pages[metadata.PageNumber - 1].Graphics.DrawString(metadata.Text, font, brush, defrectangle);//draw on the pagenumber specified
             }
             
             
@@ -73,8 +62,6 @@ namespace SyncFusionPDFBurning.Controllers
             fileStreamResult.FileDownloadName = "Annotation.pdf";
             return fileStreamResult;
         }
-
-
 
         private FileStreamResult textOnBlankPdf()
         {

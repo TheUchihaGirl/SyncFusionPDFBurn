@@ -1,15 +1,48 @@
-﻿namespace SyncFusionPDFBurning.Model
+﻿using Syncfusion.Drawing;
+using Syncfusion.Pdf.Graphics;
+
+namespace SyncFusionPDFBurning.Model
 {
     public class Metadata
     {
-        public string text { get; set; }
-        public string fontColour { get; set; }
-        public string fontFamily { get; set; }
-        public int fontSize { get; set; }
-        public float height { get; set; }
-        public float width { get; set; }
-        public int x { get; set; }
-        public int y { get; set; }
-        public int pageNumber { get; set; }
+        public string Text { get; set; }
+        public string FontFamily { set; get; }
+        public string FontColor { set; get; }
+        public float FontSize { get; set; }
+        public float Height { get; set; }
+        public float Width { get; set; }
+        public int X { get; set; }
+        public int Y { get; set; }
+        public int PageNumber { get; set; }
+
+
+        public PdfFontFamily GetFontFamily()
+        {
+            switch (this.FontFamily.ToLower())
+            {
+                case "helvetica":
+                    return PdfFontFamily.Helvetica;
+                case "courier":
+                    return PdfFontFamily.Courier;
+                case "symbol":
+                    return PdfFontFamily.Symbol;
+                case "zapfdingbats":
+                    return PdfFontFamily.ZapfDingbats;
+                default:
+                    return PdfFontFamily.TimesRoman;
+            }
+        }
+
+        public Color GetFontColor()
+        {
+            switch (this.FontColor.ToLower())
+            {
+                case "red": return Color.Red;
+                case "blue": return Color.Blue;
+                default: return Color.Black;
+            }
+        }
+
+
     }
 }
